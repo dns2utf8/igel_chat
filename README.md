@@ -1,6 +1,6 @@
 # igel (pronounced eagle)
 
-Igel is the best chat software written by the most capable, inclusive, humble and disruptive rust developers living today.
+Igel is the best chat software written by the most capable, inclusive, humble, and disruptive rust developers living today.
 
 This software is made of 100% cyber and therefore provides 100% cyber security.
 Note: std deviation currently resides around approximatly 0.42 cyber.
