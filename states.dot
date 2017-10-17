@@ -1,0 +1,45 @@
+digraph G {
+    "Client starts" -> "create device key" [label="new device"]
+    "create device key" -> "connect to server"
+    "Client starts" -> "connect to server"
+    
+    "connect to server" -> "create device account" [label="new device"]
+    "create device account" -> connected
+    "connect to server" -> connected
+    
+    "User gets ready" -> {"Client starts" "User waits for client to start up"}
+    connected -> "User waits for client to start up"
+    "User waits for client to start up" -> "Create account" [label="new user"]
+    
+    "Create account" -> "Generate user identity" -> "publish user public key" -> ready
+    
+    "User waits for client to start up" -> "Connect account" [label="existing user"]
+    "Connect account" -> "Send user key request message to users mailbox\n with temporary transfer keys" -> "display public transfer key on screen" -> "user must accept transfer key with old device\neg. scan QR code or copy hash to existing device" -> "transfer user keys over secured channel" -> ready
+    
+    
+    // ---- Server
+    "Server starts" -> "connect to DB" -> "connect with other servers" -> "listen for other servers" -> "listen for clients"
+    
+    
+    // ---- Finding a peer
+    "User intends to find a peer" -> "scan public key hash" [label="physical presence"]
+    "scan public key hash" -> "save found peer with trust level locally"
+    
+    "User intends to find a peer" -> "open search peer window" [label="known information via directory"]
+    "open search peer window" -> "enter known information like\nhash of public key" -> "select peer from results" -> "save found peer with trust level locally"
+    
+    "save found peer with trust level locally" -> replicate
+    
+    // ---- Sending a message
+    "User selects contact or group from contact list" -> "typing ..." -> "encrypt message with peers public key" -> {"send to connected server" replicate}
+    "send to connected server" -> "Server sets an expiration date for the data" -> "Server counts how many devies should receive this message"
+    
+    
+    // ---- Receiving a message
+    "Client checks server inbox" -> "fetch messages" [label="to client unknown messages available"]
+    "fetch messages" -> {"decrement receive_count of new messages on server" "User receives a message" replicate}
+    
+    
+    // ---- general
+    replicate [label="replicate data to all user devices"]
+}
