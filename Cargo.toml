@@ -1,0 +1,10 @@
+[package]
+name = "igel_chat"
+version = "0.1.0"
+authors = ["Stefan Schindler <dns2utf8@estada.ch>"]
+
+[dependencies]
+websocket = "0.20.2"
+futures = "0.1.16"
+tokio-core = "0.1.10"
+clap = "2.26"
